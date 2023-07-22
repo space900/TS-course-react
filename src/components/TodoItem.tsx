@@ -1,23 +1,22 @@
 import React from 'react';
+import {Todo} from '../types';
 
-interface TodoItemProps {
-    id: string,
-    title: string,
-    completed: boolean,
-    // children: React.ReactNode,
+interface TodoItemProps extends Todo{
+    removeTodo: (id: Todo['id']) => void,
+    toggleTodo: (id: Todo['id']) => void,
+    style?: React.CSSProperties,
 }
 
 // const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed}) => {
-const TodoItem = ({ id, title, completed}: TodoItemProps) => {
+const TodoItem = ({ id, title, completed, removeTodo, toggleTodo, style= {} }: TodoItemProps) => {
     return (
-        <li>
-            <input type="checkbox" checked={completed} />
+        <li style={{ color: 'green', ...style }}>
+            <input type="checkbox" checked={completed} onChange={() => toggleTodo(id)} />
             <span>{title}</span>
-            <span>&times;</span>
+            <span onClick={() => removeTodo(id)}>&times;</span>
             {/*{children}*/}
         </li>
     );
 }
 
-// TodoItem.defaultProps = {};
 export default TodoItem;
